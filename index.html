@@ -139,6 +139,13 @@
       video.addEventListener("loadedmetadata", updateVideo);
 
       if (video.readyState >= 1) updateVideo();
+    
+      window.addEventListener(
+  "touchstart",
+  () => video.play().then(() => video.pause()).catch(() => {}),
+  { once: true, passive: true }
+);
+
     </script>
   </body>
 </html>
