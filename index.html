@@ -12,9 +12,10 @@
       }
 
       body {
+        background: #080808;
+        filter: grayscale(60%);
         color: white;
         font-family: Arial, sans-serif;
-        filter: gray(0.9);
       }
 
       .content {
@@ -109,6 +110,7 @@
         muted
         playsinline
         preload="auto"
+        poster="./assets/poster.jpg"
         class="scrub-video"
         src="./assets/car-edit.mp4"
       ></video>
@@ -128,24 +130,26 @@
         const rect = section.getBoundingClientRect();
         const totalScroll = section.offsetHeight - window.innerHeight;
 
-        const progress = -rect.top / totalScroll;
+        const progress = Math.min(1, Math.max(0, -rect.top / totalScroll));
 
         if (video.duration) {
-          video.currentTime = progress * video.duration;
+          video.currentTime = progress * (video.duration - 0.05);
         }
       };
+
+      const unlock = () =>
+        video.play().then(() => video.pause()).catch(() => {});
 
       document.addEventListener("scroll", updateVideo);
       video.addEventListener("loadedmetadata", updateVideo);
 
       if (video.readyState >= 1) updateVideo();
-    
-      window.addEventListener(
-  "touchstart",
-  () => video.play().then(() => video.pause()).catch(() => {}),
-  { once: true, passive: true }
-);
 
+      unlock();
+      window.addEventListener("touchstart", unlock, {
+        once: true,
+        passive: true,
+      });
     </script>
   </body>
 </html>
