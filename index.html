@@ -136,7 +136,7 @@
       };
 
       document.addEventListener("scroll", updateVideo);
-      document.addEventListener("meta", updateVideo);
+      video.addEventListener("loadedmetadata", updateVideo);
     </script>
   </body>
 </html>
