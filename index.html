@@ -137,6 +137,8 @@
 
       document.addEventListener("scroll", updateVideo);
       video.addEventListener("loadedmetadata", updateVideo);
+
+      if (video.readyState >= 1) updateVideo();
     </script>
   </body>
 </html>
